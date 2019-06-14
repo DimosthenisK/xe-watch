@@ -1,10 +1,17 @@
 const env = require('dotenv').config()
 const req = require('request');
-const $ = require('cheerio');
+const notifier = require('node-notifier')
 const moment = require('moment');
+const opn = require('opn');
 
 let url = process.env.XE_SEARCH_URL;
 let loginurl = "https://my.xe.gr/app/login";
+
+notifier.on('click', function (notifierObj, options) {
+    opn(url);
+})
+
+let previousResultCount = 0;
 
 let urlLoginInfo = {
     email: process.env.XE_USER,
@@ -61,9 +68,21 @@ async function readIfNew() {
     }, function (err, httpResponse, body) {
         l("Got Results")
         let found = parseInt(body.match(/Βρέθηκαν <strong>([0-9]*)<\/strong> αγγελίες με τα κριτήρια που έχετε επιλέξει/)[1]);
-        if (found != 0)
+        if (found != 0) {
             l(`Βρέθηκαν ${found} νέες αγγελίες!`)
-        else {
+
+            if (previousResultCount < found) {
+                notifier.notify({
+                    title: 'Νέα Αγγελία!',
+                    message: 'Βρέθηκε μια νέα αγγελία!',
+                    sound: true,
+                    wait: true
+                })
+                previousResultCount = found;
+            } else {
+                l('Όσες και πριν')
+            }
+        } else {
             l("Δεν βρέθηκαν αποτελέσματα")
         }
     })
