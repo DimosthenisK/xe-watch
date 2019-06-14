@@ -57,10 +57,11 @@ async function doLogin() {
 }
 
 async function readIfNew() {
-    l("Starting Process")
-    await doLogin();
 
+    l("Doing login")
+    await doLogin();
     l("Completed login")
+
     req.get({
         url: url,
         jar: true,
@@ -89,6 +90,7 @@ async function readIfNew() {
 }
 
 (async () => {
+    l("Starting Process")
     await doLogin();
     setInterval(async () => {
         await readIfNew();
