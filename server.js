@@ -12,12 +12,7 @@ ppt.use(AdblockerPlugin({ blockTrackers: true }));
 sg.setApiKey(process.env.SENDGRID);
 
 let url = process.env.XE_SEARCH_URL;
-
-notifier.on("click", function(notifierObj, options) {
-  opn(url);
-});
-
-let previousResultCount = 2;
+let previousResultCount = 0;
 
 function l(message) {
   console.log(moment().format("MMMM Do YYYY, HH:mm:ss") + " | " + message);
