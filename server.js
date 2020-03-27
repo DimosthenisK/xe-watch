@@ -1,17 +1,14 @@
 const env = require("dotenv").config();
-const req = require("request");
-const notifier = require("node-notifier");
 const moment = require("moment");
 const opn = require("opn");
-const cheerio = require("cheerio");
 const sg = require("@sendgrid/mail");
 const ppt = require("puppeteer-extra"); // Add stealth plugin and use defaults (all tricks to hide puppeteer usage)
 const StealthPlugin = require("puppeteer-extra-plugin-stealth");
 ppt.use(StealthPlugin());
-
 // Add adblocker plugin to block all ads and trackers (saves bandwidth)
 const AdblockerPlugin = require("puppeteer-extra-plugin-adblocker");
 ppt.use(AdblockerPlugin({ blockTrackers: true }));
+
 sg.setApiKey(process.env.SENDGRID);
 
 let url = process.env.XE_SEARCH_URL;
