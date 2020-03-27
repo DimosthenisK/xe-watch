@@ -26,6 +26,8 @@ async function readIfNew(page) {
     foundText = await page.$eval(".count_classifieds", el => el.textContent);
   } catch (ex) {
     console.error(ex);
+    let bodyHTML = await page.evaluate(() => document.body.innerHTML);
+    console.log(bodyHTML);
   }
 
   let found = Number(foundText.split(" ")[1].split("")[0]);
