@@ -52,21 +52,12 @@ async function readIfNew(page) {
 
 let runFunc = async () => {
   const browser = await ppt.launch({
-    executablePath: path.join(
-      __dirname,
-      "node_modules",
-      "puppeteer",
-      ".local-chromium",
-      "linux-722234",
-      "chrome-linux",
-      "chrome"
-    ),
     args: ["--no-sandbox"]
   });
   const page = await browser.newPage();
   await page.goto(url);
   await readIfNew(page);
-  //await browser.close();
+  await browser.close();
 };
 
 (async () => {
