@@ -50,7 +50,7 @@ async function readIfNew(page) {
 }
 
 let runFunc = async () => {
-  const browser = await ppt.launch({ headless: false });
+  const browser = await ppt.launch({ args: ["--no-sandbox"] });
   const page = await browser.newPage();
   await page.goto(url);
   await readIfNew(page);
